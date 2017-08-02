@@ -1,0 +1,15 @@
+*.pyc
+*.*~
+*.egg-info/
+dist/
+_build/
+__pycache__/
+
+
+.DS_Store
+htmlcov
+.coverage
+.eggs/
+*.sqlite3
+the_comment/
+manage.py

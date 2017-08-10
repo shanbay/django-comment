@@ -37,6 +37,16 @@ class CommentTest(TestCase):
     def test_get_comments(self):
         return self.article2.comments.exists()
 
+    def test_create_certain_comments(self):
+        Article.comment_objects.create(user_id=self.user1.id,
+                                       content="Aqui es un comentario especial",
+                                       object_id=self.article.id)
+        self.assertEqual(self.article.comments.count(), 3)
+
+    def test_get_certain_comments(self):
+        self.assertEqual(Article.comment_objects.last().content,
+                         'Aqui es el ultimo comentario')
+
     def test_delete_comment(self):
         count = self.article.comments.count()
         self.article.comments.get(pk=1).delete()

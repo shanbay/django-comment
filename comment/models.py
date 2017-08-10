@@ -7,28 +7,13 @@ from vote.models import VoteModel
 
 
 class CommentManager(models.Manager):
+    def get_queryset(self):
+        content_type = ContentType.objects.get_for_model(self.model)
+        return Comment.objects.filter(content_type=content_type)
 
-    def filter(self, *args, **kwargs):
-        if 'content_object' in kwargs:
-            content_object = kwargs.pop('content_object')
-            content_type = ContentType.objects.get_for_model(content_object)
-            kwargs.update({
-                'content_type': content_type,
-                'object_id': content_object.pk
-            })
-
-        return super(CommentManager, self).filter(*args, **kwargs)
-
-    def get(self, *args, **kwargs):
-        if 'content_object' in kwargs:
-            content_object = kwargs.pop('content_object')
-            content_type = ContentType.objects.get_for_model(content_object)
-            kwargs.update({
-                'content_type': content_type,
-                'object_id': content_object.pk
-            })
-
-        return super(CommentManager, self).get(*args, **kwargs)
+    def create(self, **kwargs):
+        content_type = ContentType.objects.get_for_model(self.model)
+        Comment.objects.create(content_type=content_type, **kwargs)
 
 
 class Comment(VoteModel):
@@ -41,7 +26,7 @@ class Comment(VoteModel):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
-    objects = CommentManager()
+    # objects = CommentManager()
 
     class Meta:
         index_together = ('content_type', 'object_id')
@@ -53,6 +38,8 @@ class Comment(VoteModel):
 class CommentModel(models.Model):
     comments = GenericRelation(Comment)
     total_number = models.IntegerField(default=0)
+    objects = models.Manager()
+    comment_objects = CommentManager()
 
     class Meta:
         abstract = True

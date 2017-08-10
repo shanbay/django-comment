@@ -8,7 +8,7 @@ This project is inspired by [django-taggit](https://github.com/alex/django-taggi
 ### Quick start
 
 
-#### Add `'vote'` to your `INSTALLED_APPS` setting like this
+#### Add `'comment'` to your `INSTALLED_APPS` setting like this
 
 ```python
 INSTALLED_APPS = (
@@ -17,7 +17,7 @@ INSTALLED_APPS = (
 )
 ```
 
-#### Add `VoteModel` to the model you want to vote
+#### Add `CommentModel` to the model you want to comment
 
 ```python
 from comment.models import CommentModel
@@ -53,5 +53,8 @@ review.comments.count()
 
 # Returns all comments by user
 review.comments.filter(user_id=user_id)
+
+# Use comment_objects like a native manager
+Review.comment_objects.filter(user_id=user_id).limit(10)
 
 ```

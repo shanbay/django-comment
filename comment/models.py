@@ -15,6 +15,12 @@ class CommentManager(models.Manager):
         content_type = ContentType.objects.get_for_model(self.model)
         Comment.objects.create(content_type=content_type, **kwargs)
 
+    def get_or_create(self, **kwargs):
+        try:
+            return self.get(**kwargs), False
+        except Comment.DoesNotExist:
+            return self.create(**kwargs), True
+
 
 class Comment(VoteModel):
     user_id = models.BigIntegerField()

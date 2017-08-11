@@ -37,6 +37,19 @@ class CommentTest(TestCase):
     def test_get_comments(self):
         return self.article2.comments.exists()
 
+    def test_get_or_create(self):
+        comment, created = Article.comment_objects.get_or_create(
+            user_id=self.user3.id,
+            content="Aqui es el ultimo comentario",
+            object_id=self.article.id)
+        self.assertFalse(created)
+
+        comment, created = Article.comment_objects.get_or_create(
+            user_id=self.user3.id,
+            content="Aqui es el ultimo comentario",
+            object_id=self.article2.id)
+        self.assertTrue(created)
+
     def test_create_certain_comments(self):
         Article.comment_objects.create(user_id=self.user1.id,
                                        content="Aqui es un comentario especial",

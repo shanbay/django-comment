@@ -18,7 +18,7 @@ setup(
     license='BSD License',
     description='A simple Django app to add comment and related operations to your models.',
     long_description=README,
-    url='https://github.com/Beeblio/django-vote',
+    url='https://github.com/shanbay/django-comment',
     author='Will Skywalker',
     author_email='me@willskywalker.com',
     install_requires=['django', 'djangp-vote'],

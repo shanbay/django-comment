@@ -2,8 +2,11 @@
 
 ``django-comment`` is a simple Django app to add comments for your django model.
 
-This project is inspired by [django-taggit](https://github.com/alex/django-taggit) and directly derived from [django]
+This project is inspired by [django-taggit](https://github.com/alex/django-taggit) and directly derived from [django-vote](https://github.com/shanbay/django-vote)
 
+[![Build Status](https://travis-ci.org/shanbay/django-comment.svg?branch=develop)](https://travis-ci.org/shanbay/django-comment)
+[![Codecov](https://codecov.io/gh/shanbay/django-comment/coverage.svg?branch=master)](https://codecov.io/gh/shanbay/django-comment?branch=master)
+[![PyPI version](https://badge.fury.io/py/django-comment.svg)](https://badge.fury.io/py/django-comment)
 
 ### Quick start
 

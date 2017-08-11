@@ -10,6 +10,10 @@ class Migration(migrations.Migration):
 
     initial = True
 
+    dependencies = [
+        ('contenttypes', '__first__'),
+    ]
+
     operations = [
         migrations.CreateModel(
             name='Comment',

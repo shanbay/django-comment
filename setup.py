@@ -21,7 +21,7 @@ setup(
     url='https://github.com/shanbay/django-comment',
     author='Will Skywalker',
     author_email='me@willskywalker.com',
-    install_requires=['django', 'djangp-vote'],
+    install_requires=['django', 'django-vote'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

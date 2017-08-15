@@ -1,7 +1,10 @@
 from __future__ import absolute_import
+
+import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 from comment.models import Comment
+from comment.utils import override_autotime
 from test.models import Article
 
 
@@ -14,8 +17,10 @@ class CommentTest(TestCase):
         self.user3 = User.objects.create_user('test3', 'test3@test.com',
                                               '111111')
 
-        self.article = Article.objects.create(user_id=0, content='Eso es un test')
-        self.article2 = Article.objects.create(user_id=0, content='Eso es otro test')
+        self.article = Article.objects.create(user_id=0,
+                                              content='Eso es un test')
+        self.article2 = Article.objects.create(user_id=0,
+                                               content='Eso es otro test')
         self.article.comments.create(user_id=self.user1.id,
                                      content="Aqui es un comentario")
         self.article2.comments.create(user_id=self.user2.id,
@@ -32,7 +37,8 @@ class CommentTest(TestCase):
         content = 'Yeh ek comment hai'
         self.article.comments.create(user_id=self.user1.id, content=content)
         self.assertEqual(self.article.comments.count(), 3)
-        self.assertEqual(self.article.comments.order_by('-id').first().content, content)
+        self.assertEqual(self.article.comments.order_by('-id').first().content,
+                         content)
 
     def test_get_comments(self):
         return self.article2.comments.exists()
@@ -67,3 +73,17 @@ class CommentTest(TestCase):
 
     def test_user_comments(self):
         Comment.objects.filter(user_id=self.user1.id)
+
+    def test_override_autotime(self):
+        example = datetime.datetime(2017, 2, 2, 2, 2)
+        art = self.article.comments.create(user_id=self.user1.id,
+                                           content="Aqui es un comentario especial",
+                                           created_at=example,
+                                           updated_at=example)
+        self.assertGreater(art.created_at, example)
+        with override_autotime():
+            art = self.article.comments.create(user_id=self.user1.id,
+                                               content="Aqui es un comentario especial",
+                                               created_at=example,
+                                               updated_at=example)
+        self.assertEqual(art.created_at, example)

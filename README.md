@@ -60,4 +60,10 @@ review.comments.filter(user_id=user_id)
 # Use comment_objects like a native manager
 Review.comment_objects.filter(user_id=user_id).limit(10)
 
+# Override auto_time and auto_time_add in model fields
+from comment.utils import override_autotime
+with override_autotime():
+    com = review.comments.create(user_id, content, created_at=your_timestamp)
+print(com.created_at) # your timestamp
+
 ```

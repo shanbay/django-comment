@@ -11,7 +11,7 @@ install:
   - pip install -q Django==$DJANGO_VERSION django-vote flake8 coverage
 script:
   - flake8 --exclude comment/migrations/* comment
-  - coverage run runtests.py
+  - coverage run --omit test/* runtests.py
 matrix:
   exclude:
     - python: "3.6"
